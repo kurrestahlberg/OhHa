@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ristinolla;
+package ristinolla.ui;
 
 import java.awt.Graphics;
+import ristinolla.logic.Cell;
+import ristinolla.logic.GameArea;
 
 /**
  *
