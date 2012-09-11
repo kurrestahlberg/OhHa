@@ -6,10 +6,11 @@ package ristinolla.logic;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import ristinolla.logic.GameArea.GameAreaCallback;
 
 /**
  *
@@ -53,7 +54,7 @@ public class GameAreaTest {
     @Test
     public void testGetRows() {
         System.out.println("getRows");
-        GameArea instance = new GameArea(21, 22);
+        GameArea instance = new GameArea(21, 22, 2);
         int expResult = 22;
         int result = instance.getRows();
         assertEquals(expResult, result);
@@ -65,7 +66,7 @@ public class GameAreaTest {
     @Test
     public void testGetColumns() {
         System.out.println("getColumns");
-        GameArea instance = new GameArea(21,22);
+        GameArea instance = new GameArea(21,22, 2);
         int expResult = 21;
         int result = instance.getColumns();
         assertEquals(expResult, result);
@@ -86,19 +87,36 @@ public class GameAreaTest {
     }
 
     /**
-     * Test of setCellAt method, of class GameArea.
+     * Test of setCallback method, of class GameArea.
      */
     @Test
-    public void testSetCellAt() {
-        System.out.println("setCellAt");
-        int column = 2;
-        int row = 3;
-        int type = Cell.CIRCLE;
+    public void testSetCallback() {
+        System.out.println("setCallback");
+        GameAreaCallback cb = null;
         GameArea instance = new GameArea();
-        instance.setCellAt(column, row, type);
-        
-        Cell result = instance.getCellAt(column, row);
-        assertNotNull(result);
-        assertEquals(type, result.getType());        
+        instance.setCallback(cb);
     }
+
+    /**
+     * Test of cellSelected method, of class GameArea.
+     */
+    @Test
+    public void testCellSelected() {
+        System.out.println("cellSelected");
+        int column = 5;
+        int row = 5;
+        GameArea instance = new GameArea();
+        
+        Cell c = instance.getCellAt(column, row);
+        assertTrue(c.getType() == Cell.EMPTY);
+        
+        instance.cellSelected(column, row);
+
+        c = instance.getCellAt(column, row);
+        assertTrue(c.getType() != Cell.EMPTY);
+        
+        instance.cellSelected(54, 45);
+        instance.cellSelected(-4, -2);
+    }
+
 }

@@ -38,14 +38,7 @@ public class GameController implements MouseListener {
         
         switch(e.getButton()) {
             case MouseEvent.BUTTON1:
-                area.setCellAt(column, row, Cell.CIRCLE);
-                break;
-<<<<<<< HEAD:Ristinolla/src/ristinolla/GameController.java
-=======
-            case MouseEvent.BUTTON2:
->>>>>>> a745faa363b96d13b735ab2086437781f2906dcd:Ristinolla/src/ristinolla/ui/GameController.java
-            case MouseEvent.BUTTON3:
-                area.setCellAt(column, row, Cell.CROSS);
+                area.cellSelected(column, row);
                 break;
             default:
                 break;                
