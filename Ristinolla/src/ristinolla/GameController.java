@@ -38,7 +38,7 @@ public class GameController implements MouseListener {
             case MouseEvent.BUTTON1:
                 area.setCellAt(column, row, Cell.CIRCLE);
                 break;
-            case MouseEvent.BUTTON2:
+            case MouseEvent.BUTTON3:
                 area.setCellAt(column, row, Cell.CROSS);
                 break;
             default:

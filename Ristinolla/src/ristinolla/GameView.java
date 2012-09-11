@@ -32,6 +32,8 @@ public class GameView extends javax.swing.JPanel {
         float widthPerColumn = (float)getWidth() / (float)gameArea.getColumns();
         float heightPerRow = (float)getHeight() / (float)gameArea.getRows();
         
+        g.clearRect(0, 0, getWidth(), getHeight());
+        
         drawLines(g, widthPerColumn, heightPerRow);
         drawSigns(g, widthPerColumn, heightPerRow);
     }
