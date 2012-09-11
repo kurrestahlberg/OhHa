@@ -4,6 +4,8 @@
  */
 package ristinolla;
 
+import ristinolla.ui.MainWindow;
+
 /**
  *
  * @author kestahlb

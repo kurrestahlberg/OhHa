@@ -2,10 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ristinolla;
+package ristinolla.ui;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import ristinolla.logic.Cell;
+import ristinolla.logic.GameArea;
 
 /**
  *
@@ -32,12 +34,16 @@ public class GameController implements MouseListener {
         int column = (e.getX() * area.getColumns()) / view.getWidth();
         int row = (e.getY() * area.getRows()) / view.getHeight();
         
-        System.out.println("CLICK! [" + column + "," + row + "]");
+        System.out.println("CLICK! [" + column + "," + row + "] BUTTON " + e.getButton());
         
         switch(e.getButton()) {
             case MouseEvent.BUTTON1:
                 area.setCellAt(column, row, Cell.CIRCLE);
                 break;
+<<<<<<< HEAD:Ristinolla/src/ristinolla/GameController.java
+=======
+            case MouseEvent.BUTTON2:
+>>>>>>> a745faa363b96d13b735ab2086437781f2906dcd:Ristinolla/src/ristinolla/ui/GameController.java
             case MouseEvent.BUTTON3:
                 area.setCellAt(column, row, Cell.CROSS);
                 break;
