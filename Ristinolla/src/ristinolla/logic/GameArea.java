@@ -159,6 +159,7 @@ public class GameArea {
             if(count == 5) {
                 callback.lineDetected(playerId, first.column, first.row, 
                         last.column, last.row);
+                callback.gameOver(playerId);
             }
         }
     }

@@ -160,7 +160,18 @@ public class GameView extends javax.swing.JPanel implements GameAreaCallback {
 
     @Override
     public void gameOver(int winnerId) {
-        JOptionPane.showMessageDialog(this, "Player " + (winnerId + 1) + " wins!", 
+        String winnerType = "Unknown";
+        switch(winnerId) {
+            case Cell.CIRCLE:
+                winnerType = "Circle";
+                break;
+            case Cell.CROSS:
+                winnerType = "Cross";
+                break;
+            default:
+                break;
+        }
+        JOptionPane.showMessageDialog(this, winnerType + " wins!", 
                 "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
     }
 }
