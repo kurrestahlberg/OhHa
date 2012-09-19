@@ -42,12 +42,10 @@ public class LineTest {
     @Test
     public void testGetX1() {
         System.out.println("getX1");
-        Line instance = null;
-        int expResult = 0;
+        Line instance = new Line(0, 1, 2, 3, 4);
+        int expResult = 1;
         int result = instance.getX1();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -56,12 +54,10 @@ public class LineTest {
     @Test
     public void testGetY1() {
         System.out.println("getY1");
-        Line instance = null;
-        int expResult = 0;
+        Line instance = new Line(0, 1, 2, 3, 4);
+        int expResult = 2;
         int result = instance.getY1();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -70,12 +66,10 @@ public class LineTest {
     @Test
     public void testGetX2() {
         System.out.println("getX2");
-        Line instance = null;
-        int expResult = 0;
+        Line instance = new Line(0, 1, 2, 3, 4);
+        int expResult = 3;
         int result = instance.getX2();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -84,12 +78,10 @@ public class LineTest {
     @Test
     public void testGetY2() {
         System.out.println("getY2");
-        Line instance = null;
-        int expResult = 0;
+        Line instance = new Line(0, 1, 2, 3, 4);
+        int expResult = 4;
         int result = instance.getY2();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -98,11 +90,9 @@ public class LineTest {
     @Test
     public void testGetPlayerId() {
         System.out.println("getPlayerId");
-        Line instance = null;
-        int expResult = 0;
+        Line instance = new Line(6, 1, 2, 3, 4);
+        int expResult = 6;
         int result = instance.getPlayerId();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

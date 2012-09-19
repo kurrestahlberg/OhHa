@@ -18,6 +18,10 @@ import ristinolla.logic.GameArea.GameAreaCallback;
  */
 public class GameAreaTest {
     
+    boolean currentPlayerChangeCalled = false;
+    boolean lineDetectedCalled = false;
+    boolean gameOverCalled = false;
+        
     public GameAreaTest() {
     }
     
@@ -43,7 +47,6 @@ public class GameAreaTest {
     @Test
     public void testGetGameArea() {
         System.out.println("getGameArea");
-        GameArea expResult = null;
         GameArea result = GameArea.getGameArea();
         assertNotNull(result);
     }
@@ -92,9 +95,35 @@ public class GameAreaTest {
     @Test
     public void testSetCallback() {
         System.out.println("setCallback");
-        GameAreaCallback cb = null;
+        
+        currentPlayerChangeCalled = false;
+        lineDetectedCalled = false;
+        gameOverCalled = false;
+        
+        GameAreaCallback cb = new GameAreaCallback() {
+
+            @Override
+            public void currentPlayerChanged(int currentPlayer) {
+                currentPlayerChangeCalled = true;
+            }
+
+            @Override
+            public void lineDetected(int playerId, int x1, int y1, int x2, int y2) {
+                lineDetectedCalled = true;
+            }
+
+            @Override
+            public void gameOver(int winnerId) {
+                gameOverCalled = true;
+            }
+            
+        };
+        
         GameArea instance = new GameArea();
+        
+        /* No way to check if this works other than no exceptions */
         instance.setCallback(cb);
+        
     }
 
     /**
