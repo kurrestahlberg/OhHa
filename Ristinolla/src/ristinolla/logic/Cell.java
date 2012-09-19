@@ -37,13 +37,6 @@ public class Cell {
         int row = this.row + GameArea.ROWDIR[direction];
         int column = this.column + GameArea.COLUMNDIR[direction];
         
-        if(row < 0 || row >= owner.getRows()) {
-            return null;
-        }
-        if(column < 0 || column >= owner.getColumns()) {
-            return null;
-        }
-        
         return owner.getCellAt(column, row);
     }
 }

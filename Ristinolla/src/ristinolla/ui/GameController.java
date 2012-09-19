@@ -18,6 +18,8 @@ public class GameController implements MouseListener {
     private GameView view;
     private GameArea area;
     
+    private boolean locked = false;
+    
     public GameController(GameView view, GameArea area) {
         this.view = view;
         this.area = area;
@@ -25,11 +27,9 @@ public class GameController implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        /*
-        if(e.getButton() != MouseEvent.BUTTON1) {
+        if(locked) {
             return;
         }
-        */
         
         int column = (e.getX() * area.getColumns()) / view.getWidth();
         int row = (e.getY() * area.getRows()) / view.getHeight();
@@ -64,5 +64,9 @@ public class GameController implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+    
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

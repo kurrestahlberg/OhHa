@@ -33,6 +33,8 @@ public class GameArea {
     private int rows = 20;
     private int columns = 20;
     
+    private int freeCells = 0;
+    
     private Cell[][] cells = null;
     
     int currentPlayer = 0;
@@ -52,10 +54,10 @@ public class GameArea {
         initData();
     }
     
-    public GameArea(int columns, int rows, int players) {
+    public GameArea(int columns, int rows) {
         this.rows = rows;
         this.columns = columns;
-        this.players = players;
+        this.players = 2;
         
         initData();
     }
@@ -73,6 +75,10 @@ public class GameArea {
     }
     
     public Cell getCellAt(int column, int row) {
+        if(column < 0 || column >= getColumns() || row < 0 || row >= getRows()) {
+            return null;
+        }
+        
         return cells[column][row];
     }
     
@@ -89,6 +95,7 @@ public class GameArea {
         }
         
         currentPlayer = 0;
+        freeCells = columns * rows;
     }
     
     public void cellSelected(int column, int row) {
@@ -110,7 +117,11 @@ public class GameArea {
                 //Uh oh.
                 break;
         }
-        checkForLines(column, row);
+        
+        freeCells--;
+        if(!checkForLines(column, row) && freeCells == 0) {
+            callback.gameOver(-1);
+        }
         advanceTurn();
     }
 
@@ -125,7 +136,7 @@ public class GameArea {
         }
     }
     
-    private void checkForLines(int column, int row) {
+    private boolean checkForLines(int column, int row) {
         Cell startingPoint = getCellAt(column, row);
         int playerId = startingPoint.getType();
         
@@ -160,8 +171,11 @@ public class GameArea {
                 callback.lineDetected(playerId, first.column, first.row, 
                         last.column, last.row);
                 callback.gameOver(playerId);
+                return true;
             }
         }
+        
+        return false;
     }
 }
 

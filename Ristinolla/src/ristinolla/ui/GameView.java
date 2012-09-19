@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 import java.util.LinkedList;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import ristinolla.logic.Cell;
 import ristinolla.logic.GameArea;
@@ -24,19 +23,14 @@ public class GameView extends javax.swing.JPanel implements GameAreaCallback {
     
     private GameArea gameArea;
     private GameController controller;
-    private LinkedList<Line> lineList = new LinkedList<Line>();
+    private LinkedList<Line> lineList;
 
     /**
      * Creates new form GameField
      */
     public GameView() {
-        gameArea = new GameArea();
-        gameArea.setCallback(this);
-        
+        newGame(20, 20);
         initComponents();
-        
-        controller = new GameController(this, gameArea);
-        addMouseListener(controller);
     }
     
     @Override
@@ -160,18 +154,47 @@ public class GameView extends javax.swing.JPanel implements GameAreaCallback {
 
     @Override
     public void gameOver(int winnerId) {
-        String winnerType = "Unknown";
-        switch(winnerId) {
-            case Cell.CIRCLE:
-                winnerType = "Circle";
-                break;
-            case Cell.CROSS:
-                winnerType = "Cross";
-                break;
-            default:
-                break;
+        if(winnerId == -1) {
+            JOptionPane.showMessageDialog(this, "It is a tie!", 
+                    "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String winnerType = "Unknown";
+            switch(winnerId) {
+                case Cell.CIRCLE:
+                    winnerType = "Circle";
+                    break;
+                case Cell.CROSS:
+                    winnerType = "Cross";
+                    break;
+                default:
+                    break;
+            }
+            JOptionPane.showMessageDialog(this, winnerType + " wins!", 
+                    "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
         }
-        JOptionPane.showMessageDialog(this, winnerType + " wins!", 
-                "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
+        controller.setLocked(true);
+    }
+
+    public void newGame(int width, int height) {
+        lineList = new LinkedList<Line>();
+        
+        gameArea = new GameArea(width, height);
+        gameArea.setCallback(this);
+        
+        controller = new GameController(this, gameArea);
+        addMouseListener(controller);
+        
+        controller.setLocked(false);
+        repaint();
+    }
+    
+    public void newGameDialogTriggered() {
+        NewGameDialog dlg = new NewGameDialog(null, true, 
+                gameArea.getColumns(), gameArea.getRows());
+        dlg.setVisible(true);
+        
+        if(dlg.isExitOk()) {
+            newGame(dlg.getGameAreaWidth(), dlg.getGameAreaHeight());
+        }        
     }
 }

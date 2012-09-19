@@ -49,6 +49,7 @@ public class GameAreaTest {
         System.out.println("getGameArea");
         GameArea result = GameArea.getGameArea();
         assertNotNull(result);
+        assertTrue(result instanceof GameArea);
     }
 
     /**
@@ -57,7 +58,7 @@ public class GameAreaTest {
     @Test
     public void testGetRows() {
         System.out.println("getRows");
-        GameArea instance = new GameArea(21, 22, 2);
+        GameArea instance = new GameArea(21, 22);
         int expResult = 22;
         int result = instance.getRows();
         assertEquals(expResult, result);
@@ -69,7 +70,7 @@ public class GameAreaTest {
     @Test
     public void testGetColumns() {
         System.out.println("getColumns");
-        GameArea instance = new GameArea(21,22, 2);
+        GameArea instance = new GameArea(21,22);
         int expResult = 21;
         int result = instance.getColumns();
         assertEquals(expResult, result);
@@ -87,6 +88,14 @@ public class GameAreaTest {
         Cell result = instance.getCellAt(column, row);
         assertNotNull(result);
         assertEquals(Cell.EMPTY, result.getType());
+        
+        //These are outside of the game area, should not crash!
+        result = instance.getCellAt(54, 45);
+        assertNull(result);
+        result = instance.getCellAt(-4, -2);
+        assertNull(result);
+        result = instance.getCellAt(20, 20);
+        assertNull(result);
     }
 
     /**
@@ -121,9 +130,19 @@ public class GameAreaTest {
         
         GameArea instance = new GameArea();
         
-        /* No way to check if this works other than no exceptions */
         instance.setCallback(cb);
         
+        for(int i = 0; i < 5; i++) {
+            instance.cellSelected(i + 5, 5);
+            assertTrue(currentPlayerChangeCalled);
+            currentPlayerChangeCalled = false;
+            instance.cellSelected(i + 5, 6);
+            assertTrue(currentPlayerChangeCalled);
+            currentPlayerChangeCalled = false;
+        }
+        
+        assertTrue(lineDetectedCalled);
+        assertTrue(gameOverCalled);
     }
 
     /**
@@ -144,8 +163,10 @@ public class GameAreaTest {
         c = instance.getCellAt(column, row);
         assertTrue(c.getType() != Cell.EMPTY);
         
+        //These are outside of the game area, should not crash!
         instance.cellSelected(54, 45);
         instance.cellSelected(-4, -2);
+        
     }
 
 }
