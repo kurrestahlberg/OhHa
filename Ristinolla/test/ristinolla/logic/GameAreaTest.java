@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ristinolla.logic;
 
 import org.junit.After;
@@ -10,17 +6,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ristinolla.logic.GameArea.GameAreaCallback;
 
 /**
  *
  * @author kurre
  */
 public class GameAreaTest {
-    
-    boolean currentPlayerChangeCalled = false;
-    boolean lineDetectedCalled = false;
-    boolean gameOverCalled = false;
         
     public GameAreaTest() {
     }
@@ -41,16 +32,6 @@ public class GameAreaTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getGameArea method, of class GameArea.
-     */
-    @Test
-    public void testGetGameArea() {
-        System.out.println("getGameArea");
-        GameArea result = GameArea.getGameArea();
-        assertNotNull(result);
-        assertTrue(result instanceof GameArea);
-    }
 
     /**
      * Test of getRows method, of class GameArea.
@@ -99,74 +80,41 @@ public class GameAreaTest {
     }
 
     /**
-     * Test of setCallback method, of class GameArea.
+     * Test of setCellAt method, of class GameArea.
      */
     @Test
-    public void testSetCallback() {
-        System.out.println("setCallback");
-        
-        currentPlayerChangeCalled = false;
-        lineDetectedCalled = false;
-        gameOverCalled = false;
-        
-        GameAreaCallback cb = new GameAreaCallback() {
-
-            @Override
-            public void currentPlayerChanged(int currentPlayer) {
-                currentPlayerChangeCalled = true;
-            }
-
-            @Override
-            public void lineDetected(int playerId, int x1, int y1, int x2, int y2) {
-                lineDetectedCalled = true;
-            }
-
-            @Override
-            public void gameOver(int winnerId) {
-                gameOverCalled = true;
-            }
-            
-        };
-        
+    public void testSetCellAt() {
+        System.out.println("setCellAt");
+        int column = 10;
+        int row = 10;
+        int type = Cell.CROSS;
         GameArea instance = new GameArea();
-        
-        instance.setCallback(cb);
-        
-        for(int i = 0; i < 5; i++) {
-            instance.cellSelected(i + 5, 5);
-            assertTrue(currentPlayerChangeCalled);
-            currentPlayerChangeCalled = false;
-            instance.cellSelected(i + 5, 6);
-            assertTrue(currentPlayerChangeCalled);
-            currentPlayerChangeCalled = false;
-        }
-        
-        assertTrue(lineDetectedCalled);
-        assertTrue(gameOverCalled);
+        assertTrue(instance.getCellAt(column, row).getType() == Cell.EMPTY);
+        instance.setCellAt(column, row, type);
+        assertTrue(instance.getCellAt(column, row).getType() == type);
     }
 
     /**
-     * Test of cellSelected method, of class GameArea.
+     * Test of getFreeCells method, of class GameArea.
      */
     @Test
-    public void testCellSelected() {
-        System.out.println("cellSelected");
-        int column = 5;
-        int row = 5;
-        GameArea instance = new GameArea();
+    public void testGetFreeCells() {
+        System.out.println("getFreeCells");
+        int rows = 20;
+        int columns = 20;
         
-        Cell c = instance.getCellAt(column, row);
-        assertTrue(c.getType() == Cell.EMPTY);
-        
-        instance.cellSelected(column, row);
+        GameArea instance = new GameArea(rows, columns);
+        int expResult = rows * columns;
+        int result = instance.getFreeCells();
+        assertEquals(expResult, result);
 
-        c = instance.getCellAt(column, row);
-        assertTrue(c.getType() != Cell.EMPTY);
+        rows = 22;
+        columns = 21;
         
-        //These are outside of the game area, should not crash!
-        instance.cellSelected(54, 45);
-        instance.cellSelected(-4, -2);
-        
+        instance = new GameArea(rows, columns);
+        expResult = rows * columns;
+        result = instance.getFreeCells();
+        assertEquals(expResult, result);
     }
 
 }

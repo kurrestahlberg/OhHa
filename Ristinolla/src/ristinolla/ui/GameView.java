@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ristinolla.ui;
 
 import java.awt.BasicStroke;
@@ -13,14 +9,16 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import ristinolla.logic.Cell;
 import ristinolla.logic.GameArea;
-import ristinolla.logic.GameArea.GameAreaCallback;
+import ristinolla.logic.GameLogic;
+import ristinolla.logic.GameLogic.Callback;
 
 /**
  *
  * @author kestahlb
  */
-public class GameView extends javax.swing.JPanel implements GameAreaCallback {
+public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
     
+    private GameLogic gameLogic;
     private GameArea gameArea;
     private GameController controller;
     private LinkedList<Line> lineList;
@@ -178,10 +176,12 @@ public class GameView extends javax.swing.JPanel implements GameAreaCallback {
     public void newGame(int width, int height) {
         lineList = new LinkedList<Line>();
         
-        gameArea = new GameArea(width, height);
-        gameArea.setCallback(this);
+        //gameArea = new GameArea(width, height);
+        gameLogic = new GameLogic(width, height);
+        gameLogic.setCallback(this);
+        gameArea = gameLogic.getGameArea();
         
-        controller = new GameController(this, gameArea);
+        controller = new GameController(this, gameLogic);
         addMouseListener(controller);
         
         controller.setLocked(false);

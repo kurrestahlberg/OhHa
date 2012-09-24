@@ -1,13 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ristinolla.ui;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import ristinolla.logic.Cell;
 import ristinolla.logic.GameArea;
+import ristinolla.logic.GameLogic;
 
 /**
  *
@@ -17,12 +13,14 @@ public class GameController implements MouseListener {
     
     private GameView view;
     private GameArea area;
+    private GameLogic logic;
     
     private boolean locked = false;
     
-    public GameController(GameView view, GameArea area) {
+    public GameController(GameView view, GameLogic logic) {
         this.view = view;
-        this.area = area;
+        this.logic = logic;
+        this.area = logic.getGameArea();
     }
 
     @Override
@@ -38,7 +36,7 @@ public class GameController implements MouseListener {
         
         switch(e.getButton()) {
             case MouseEvent.BUTTON1:
-                area.cellSelected(column, row);
+                logic.cellSelected(column, row);
                 break;
             default:
                 break;                
