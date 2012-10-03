@@ -27,7 +27,7 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
      * Creates new form GameField
      */
     public GameView() {
-        newGame(20, 20);
+        newGame(20, 20, 5);
         initComponents();
     }
     
@@ -173,11 +173,15 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
         controller.setLocked(true);
     }
 
-    public void newGame(int width, int height) {
+    public void newGame(int width, int height, int winningLineLength) {
+        if(controller != null) {
+            removeMouseListener(controller);
+        }
+        
         lineList = new LinkedList<Line>();
         
         //gameArea = new GameArea(width, height);
-        gameLogic = new GameLogic(width, height);
+        gameLogic = new GameLogic(width, height, winningLineLength);
         gameLogic.setCallback(this);
         gameArea = gameLogic.getGameArea();
         
@@ -194,7 +198,7 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
         dlg.setVisible(true);
         
         if(dlg.isExitOk()) {
-            newGame(dlg.getGameAreaWidth(), dlg.getGameAreaHeight());
+            newGame(dlg.getGameAreaWidth(), dlg.getGameAreaHeight(), dlg.getWinningLineLength());
         }        
     }
 }

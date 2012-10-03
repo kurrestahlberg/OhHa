@@ -64,6 +64,14 @@
         </Component>
         <Component class="javax.swing.JSpinner" name="heightSpinner">
         </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Winning Line Length"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="lineLengthSpinner">
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel2">

@@ -18,6 +18,7 @@ public class NewGameDialog extends javax.swing.JDialog {
         setResizable(false);
         widthSpinner.setModel(new SpinnerNumberModel(width, 5, 100, 1));
         heightSpinner.setModel(new SpinnerNumberModel(height, 5, 100, 1));
+        lineLengthSpinner.setModel(new SpinnerNumberModel(5, 3, 20, 1));
     }
 
     /**
@@ -35,6 +36,8 @@ public class NewGameDialog extends javax.swing.JDialog {
         widthSpinner = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         heightSpinner = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        lineLengthSpinner = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         cancelButton = new javax.swing.JButton();
         newGameButton = new javax.swing.JButton();
@@ -58,6 +61,11 @@ public class NewGameDialog extends javax.swing.JDialog {
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jPanel1.add(jLabel4);
         jPanel1.add(heightSpinner);
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Winning Line Length");
+        jPanel1.add(jLabel3);
+        jPanel1.add(lineLengthSpinner);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -108,14 +116,20 @@ public class NewGameDialog extends javax.swing.JDialog {
         return ((Integer)heightSpinner.getValue()).intValue();
     }
     
+    public int getWinningLineLength() {
+        return ((Integer)lineLengthSpinner.getValue()).intValue();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JSpinner heightSpinner;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSpinner lineLengthSpinner;
     private javax.swing.JButton newGameButton;
     private javax.swing.JSpinner widthSpinner;
     // End of variables declaration//GEN-END:variables

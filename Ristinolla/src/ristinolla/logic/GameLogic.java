@@ -39,6 +39,7 @@ public class GameLogic {
     
     private int currentPlayer = 0;
     private int players = 2;
+    private int winningLineLength = 5;
     private GameArea gameArea;
     
     private Callback callback = null;
@@ -48,8 +49,9 @@ public class GameLogic {
      * @param width Pelialueen leveys
      * @param height Pelialueen korkeus
      */
-    public GameLogic(int width, int height) {
+    public GameLogic(int width, int height, int winningLineLength) {
         this.players = 2;
+        this.winningLineLength = winningLineLength;
         currentPlayer = 0;
         gameArea = new GameArea(width, height);
     }
@@ -93,18 +95,18 @@ public class GameLogic {
             Cell neighbor = startingPoint.getNeighborToDir(i);
             while(neighbor != null && neighbor.getType() == playerId) {
                 count++;
-                if(count >= 5) {
+                if(count >= winningLineLength) {
                     last = neighbor;
                     break;
                 }
                 last = neighbor;
                 neighbor = neighbor.getNeighborToDir(i);
             }
-            if(count < 5) {
+            if(count < winningLineLength) {
                 neighbor = startingPoint.getNeighborToDir(i + 4);
                 while(neighbor != null && neighbor.getType() == playerId) {
                     count++;
-                    if(count >= 5) {
+                    if(count >= winningLineLength) {
                         first = neighbor;
                         break;
                     }
@@ -112,7 +114,7 @@ public class GameLogic {
                 }
             }
             
-            if(count == 5) {
+            if(count >= winningLineLength) {
                 callback.lineDetected(playerId, first.column, first.row, 
                         last.column, last.row);
                 callback.gameOver(playerId);
