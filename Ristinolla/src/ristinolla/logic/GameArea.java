@@ -117,10 +117,16 @@ public class GameArea {
     
     void setCellAt(int column, int row, int type) {
         Cell c = getCellAt(column, row);
-        if(c.getType() == type) return;
+        if(c.getType() == type) {
+            return;
+        }
         
-        if(c.getType() == Cell.EMPTY) freeCells--;
-        if(type == Cell.EMPTY) freeCells++;
+        if(c.getType() == Cell.EMPTY) {
+            freeCells--;
+        }
+        if(type == Cell.EMPTY) {
+            freeCells++;
+        }
         
         cells[column][row] = new Cell(this, column, row, type);
     }

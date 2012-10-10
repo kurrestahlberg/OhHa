@@ -95,6 +95,54 @@ public class GameAreaTest {
     }
 
     /**
+     * Test of setCellAt method, of class GameArea.
+     */
+    @Test
+    public void testSetCellAtCheckFreeCells() {
+        System.out.println("setCellAtCheckFreeCells");
+        int column = 10;
+        int row = 10;
+        int type = Cell.CROSS;
+        GameArea instance = new GameArea();
+        int freeCells = instance.getFreeCells();
+        instance.setCellAt(column, row, type);
+        assertTrue(instance.getFreeCells() < freeCells);
+    }
+
+    /**
+     * Test of setCellAt method, of class GameArea.
+     */
+    @Test
+    public void testSetCellAtWithEmpty() {
+        System.out.println("setCellAtWithEmpty");
+        int column = 10;
+        int row = 10;
+        int type = Cell.CROSS;
+        GameArea instance = new GameArea();
+        instance.setCellAt(column, row, type);
+        int freeCells = instance.getFreeCells();
+        instance.setCellAt(column, row, Cell.EMPTY);
+        assertTrue(instance.getFreeCells() > freeCells);
+    }
+
+    /**
+     * Test of setCellAt method, of class GameArea.
+     */
+    @Test
+    public void testSetCellAtWithSameType() {
+        System.out.println("setCellAtWithSameType");
+        int column = 10;
+        int row = 10;
+        int type = Cell.CROSS;
+        GameArea instance = new GameArea();
+        instance.setCellAt(column, row, type);
+        assertTrue(instance.getCellAt(column, row).getType() == type);
+        Cell c = instance.getCellAt(column, row);
+        instance.setCellAt(column, row, type);
+        assertSame(instance.getCellAt(column, row), c);
+    }
+
+    /**
      * Test of getFreeCells method, of class GameArea.
      */
     @Test
