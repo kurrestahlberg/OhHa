@@ -96,31 +96,23 @@ public class GameLogic {
         
         for(int i = 0; i < 4; i++) {
             int count = 1;
+            int prevCount = 0;
             Cell first = startingPoint;
-            Cell last = startingPoint;   
+            Cell last = startingPoint;
             
-            Cell neighbor = startingPoint.getNeighborToDir(i);
-            while(neighbor != null && neighbor.getType() == playerId) {
-                count++;
-                if(count >= winningLineLength) {
-                    last = neighbor;
-                    break;
-                }
-                last = neighbor;
-                neighbor = neighbor.getNeighborToDir(i);
-            }
-            if(count < winningLineLength) {
-                neighbor = startingPoint.getNeighborToDir(i + 4);
-                while(neighbor != null && neighbor.getType() == playerId) {
+            while(count != prevCount && count < winningLineLength) {
+                prevCount = count;
+                Cell temp = first.getNeighborToDir(i+4);
+                if(temp != null && temp.getType() == playerId) {
+                    first = temp;
                     count++;
-                    if(count >= winningLineLength) {
-                        first = neighbor;
-                        break;
-                    }
-                    neighbor = neighbor.getNeighborToDir(i + 4);
+                }
+                temp = last.getNeighborToDir(i);
+                if(temp != null && temp.getType() == playerId) {
+                    last = temp;
+                    count++;
                 }
             }
-            
             if(count >= winningLineLength) {
                 callback.lineDetected(playerId, first.column, first.row, 
                         last.column, last.row);
@@ -128,7 +120,6 @@ public class GameLogic {
                 return true;
             }
         }
-        
         return false;
     }
 
