@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Arrays;
 
 /**
  * Pelilogiikan pääluokka joka hoitaa pelin sääntöihin liittyvän toiminnan.
@@ -90,6 +91,7 @@ public class GameLogic {
         }
     }
     
+    /*
     private boolean checkForLines(int column, int row) {
         Cell startingPoint = gameArea.getCellAt(column, row);
         int playerId = startingPoint.getType();
@@ -118,6 +120,29 @@ public class GameLogic {
                         last.column, last.row);
                 callback.gameOver(playerId);
                 return true;
+            }
+        }
+        return false;
+    }
+    */
+    
+    private boolean checkForLines(int column, int row) {
+        Cell startingPoint = gameArea.getCellAt(column, row);
+        int playerId = startingPoint.getType();
+        Cell cells[] = new Cell[8];
+        Arrays.fill(cells, startingPoint);
+        for(int i = 0; i < 8; i++) {
+            Cell temp = cells[i].getNeighborToDir(i);
+            while(temp != null && temp.getType() == playerId) {
+                cells[i] = temp;
+                if(Math.abs(cells[i].column - cells[(i+4)%8].column) >= (winningLineLength-1) ||
+                        Math.abs(cells[i].row - cells[(i+4)%8].row) >= (winningLineLength-1)) {
+                    callback.lineDetected(playerId, cells[i].column, cells[i].row, 
+                            cells[(i+4)%8].column, cells[(i+4)%8].row);
+                    callback.gameOver(playerId);
+                    return true;
+                }
+                temp = cells[i].getNeighborToDir(i);
             }
         }
         return false;
