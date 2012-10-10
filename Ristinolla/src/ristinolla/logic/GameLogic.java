@@ -102,7 +102,7 @@ public class GameLogic {
             Cell first = startingPoint;
             Cell last = startingPoint;
             
-            while(count != prevCount && count < winningLineLength) {
+            while(count != prevCount) {
                 prevCount = count;
                 Cell temp = first.getNeighborToDir(i+4);
                 if(temp != null && temp.getType() == playerId) {
@@ -114,12 +114,13 @@ public class GameLogic {
                     last = temp;
                     count++;
                 }
-            }
-            if(count >= winningLineLength) {
-                callback.lineDetected(playerId, first.column, first.row, 
-                        last.column, last.row);
-                callback.gameOver(playerId);
-                return true;
+                
+                if(count >= winningLineLength) {
+                    callback.lineDetected(playerId, first.column, first.row, 
+                            last.column, last.row);
+                    callback.gameOver(playerId);
+                    return true;
+                }
             }
         }
         return false;
