@@ -43,16 +43,24 @@ public class CellTest {
      * Test of getType method, of class Cell.
      */
     @Test
-    public void testGetType() {
-        System.out.println("getType");
+    public void testGetTypeCircle() {
+        System.out.println("getType(Circle)");
         Cell instance = new Cell(area, 0, 0, Cell.CIRCLE);
         int expResult = Cell.CIRCLE;
         int result = instance.getType();
         assertEquals(expResult, result);
         
-        instance = new Cell(area, 0, 0, Cell.CROSS);
-        expResult = Cell.CROSS;
-        result = instance.getType();
+    }
+
+    /**
+     * Test of getType method, of class Cell.
+     */
+    @Test
+    public void testGetTypeCross() {
+        System.out.println("getType(Cross)");
+        Cell instance = new Cell(area, 0, 0, Cell.CROSS);
+        int expResult = Cell.CROSS;
+        int result = instance.getType();
         assertEquals(expResult, result);
     }
 

@@ -12,7 +12,6 @@ import ristinolla.logic.GameLogic;
 public class GameController implements MouseListener {
     
     private GameView view;
-    private GameArea area;
     private GameLogic logic;
     
     private boolean locked = false;
@@ -20,7 +19,6 @@ public class GameController implements MouseListener {
     public GameController(GameView view, GameLogic logic) {
         this.view = view;
         this.logic = logic;
-        this.area = logic.getGameArea();
     }
 
     @Override
@@ -28,6 +26,8 @@ public class GameController implements MouseListener {
         if(locked) {
             return;
         }
+        
+        GameArea area = logic.getGameArea();
         
         int column = (e.getX() * area.getColumns()) / view.getWidth();
         int row = (e.getY() * area.getRows()) / view.getHeight();

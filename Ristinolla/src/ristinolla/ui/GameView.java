@@ -4,13 +4,15 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import ristinolla.logic.Cell;
 import ristinolla.logic.GameArea;
 import ristinolla.logic.GameLogic;
-import ristinolla.logic.GameLogic.Callback;
 
 /**
  *
@@ -22,6 +24,8 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
     private GameArea gameArea;
     private GameController controller;
     private LinkedList<Line> lineList;
+    
+    private boolean gameOver = false;
 
     /**
      * Creates new form GameField
@@ -171,6 +175,7 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
                     "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
         }
         controller.setLocked(true);
+        gameOver = true;
     }
 
     public void newGame(int width, int height, int winningLineLength) {
@@ -180,7 +185,6 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
         
         lineList = new LinkedList<Line>();
         
-        //gameArea = new GameArea(width, height);
         gameLogic = new GameLogic(width, height, winningLineLength);
         gameLogic.setCallback(this);
         gameArea = gameLogic.getGameArea();
@@ -189,6 +193,7 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
         addMouseListener(controller);
         
         controller.setLocked(false);
+        gameOver = false;
         repaint();
     }
     
@@ -200,5 +205,18 @@ public class GameView extends javax.swing.JPanel implements GameLogic.Callback {
         if(dlg.isExitOk()) {
             newGame(dlg.getGameAreaWidth(), dlg.getGameAreaHeight(), dlg.getWinningLineLength());
         }        
+    }
+    
+    public void saveGame(OutputStream os) throws IOException {
+        gameLogic.saveGame(os);
+    }
+    
+    public void loadGame(InputStream is) throws IOException {
+        gameLogic.loadGame(is);
+        gameArea = gameLogic.getGameArea();
+    }
+    
+    public boolean gameOver() {
+        return gameOver;
     }
 }

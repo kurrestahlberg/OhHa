@@ -1,5 +1,12 @@
 package ristinolla.logic;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.IOException;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
 /**
  * Pelilogiikan pääluokka joka hoitaa pelin sääntöihin liittyvän toiminnan.
  * 
@@ -160,5 +167,23 @@ public class GameLogic {
             callback.gameOver(-1);
         }
         advanceTurn();
+    }
+    
+    public void saveGame(OutputStream stream) throws IOException {
+        DataOutputStream dos = new DataOutputStream(stream);
+        
+        dos.writeInt(currentPlayer);
+        dos.writeInt(players);
+        dos.writeInt(winningLineLength);
+        gameArea.saveGame(dos);
+    }
+    
+    public void loadGame(InputStream stream) throws IOException {
+        DataInputStream dis = new DataInputStream(stream);
+        
+        currentPlayer = dis.readInt();
+        players = dis.readInt();
+        winningLineLength = dis.readInt();
+        gameArea = new GameArea(dis);
     }
 }

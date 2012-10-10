@@ -1,5 +1,9 @@
 package ristinolla.logic;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
  * Pelialueen hallintaluokka.
  * 
@@ -55,8 +59,6 @@ public class GameArea {
      */
     public static final int ROWDIR[] = {-1, -1, 0, 1, 1, 1, 0, -1};
     
-    private static GameArea instance = null;
-    
     private int rows = 20;
     private int columns = 20;
     
@@ -73,6 +75,14 @@ public class GameArea {
         this.columns = columns;
         
         initData();
+    }
+    
+    GameArea(DataInputStream dis) throws IOException {
+        this.rows = dis.readInt();
+        this.columns = dis.readInt();
+        this.freeCells = dis.readInt();
+        
+        initData(dis);
     }
     
     /**
@@ -125,6 +135,15 @@ public class GameArea {
         
         freeCells = columns * rows;
     }
+
+    private void initData(DataInputStream dis) throws IOException {
+        cells = new Cell[columns][rows];
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                cells[j][i] = new Cell(this, j, i, dis.readInt());
+            }
+        }
+    }
     
     /**
      * Hakee vapaiden ruutujen määrän
@@ -132,6 +151,19 @@ public class GameArea {
      */
     public int getFreeCells() {
         return freeCells;
+    }
+    
+    public void saveGame(DataOutputStream dos) throws IOException {
+        dos.writeInt(rows);
+        dos.writeInt(columns);
+        dos.writeInt(freeCells);
+        
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < columns; j++) {
+                dos.writeInt(cells[j][i].getType());
+            }
+        }
+        
     }
     
 }

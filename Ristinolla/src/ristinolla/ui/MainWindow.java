@@ -2,6 +2,14 @@ package ristinolla.ui;
 
 import java.awt.BorderLayout;
 import javax.sound.midi.ControllerEventListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.JOptionPane;
+
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.File;
 
 /**
  *
@@ -9,6 +17,8 @@ import javax.sound.midi.ControllerEventListener;
  */
 public class MainWindow extends javax.swing.JFrame {
 
+    private static final String SAVEFILENAME = "ristinolla.sav";
+    
     /**
      * Creates new form MainWindow
      */
@@ -18,6 +28,60 @@ public class MainWindow extends javax.swing.JFrame {
         gameField = new GameView();
         getContentPane().add(gameField, BorderLayout.CENTER);
         pack();
+        
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(exiting()) System.exit(0);
+            }
+
+            @Override
+            public void windowOpened(WindowEvent we) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent we) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent we) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent we) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent we) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent we) {
+            }
+           });
+        
+        checkForLoadGame();
+    }
+    
+    private void checkForLoadGame() {
+        File f = new File(SAVEFILENAME);
+        if(f.exists()) {
+            int rv = JOptionPane.showConfirmDialog(this, 
+                    "There seems to be a saved game, would you like to load it?", 
+                    "Load Game?", JOptionPane.YES_NO_OPTION);
+            
+            if(JOptionPane.YES_OPTION == rv) {
+                try {
+
+                    FileInputStream fis = new FileInputStream(f);
+                    gameField.loadGame(fis);
+                } catch (IOException e) {
+                    //Can't read..
+                }
+            }
+            
+            f.delete();
+        }
     }
 
     /**
@@ -34,7 +98,7 @@ public class MainWindow extends javax.swing.JFrame {
         newGameButton = new javax.swing.JButton();
         quitButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
@@ -62,7 +126,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
-        System.exit(0);
+        if(exiting()) System.exit(0);
     }//GEN-LAST:event_quitButtonActionPerformed
 
     private void newGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameButtonActionPerformed
@@ -76,6 +140,24 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton newGameButton;
     private javax.swing.JButton quitButton;
     // End of variables declaration//GEN-END:variables
+
+    private boolean exiting() {
+        if(gameField.gameOver()) return true;
+        
+        int rv = JOptionPane.showConfirmDialog(this, 
+                "The game is in progress, would you like to save it for later?", 
+                "Save Game?", JOptionPane.YES_NO_CANCEL_OPTION);
+        if(JOptionPane.YES_OPTION == rv) {
+            try {
+                gameField.saveGame(new FileOutputStream(SAVEFILENAME));
+            } catch (IOException e) {
+
+            }
+        }
+        
+        if(JOptionPane.CANCEL_OPTION == rv) return false;
+        return true;
+    }
     
     private GameView gameField;
 }
