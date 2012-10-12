@@ -1,0 +1,33 @@
+Ristinolla - Käyttöohje
+
+1) Pelin aloitus
+	Peli on käynnistyessään alkutilassa. Klikkaamalla ruudukon jotain 
+	ruutua ilmestyy ensimmäinen merkki ja peli on käynnissä. Painamalla
+	"New Game" -painiketta aukeaa uuden pelin asetusikkuna josta voi
+	valita pelialueen koon sekä voittavan jonon pituuden. Jos tässä
+	ruudussa painaa "New Game" pelialue sekä nollautuu että säätyy
+	uuteen kokoonsa.
+
+2) Vuoron vaihtuminen
+	Vuoro vaihtuu automaattisesti, eli toisin sanoen ruudulle ilmestyy 
+	vuorotellen ristejä ja nollia
+
+3) Pelin voittaminen
+	Kun jompi kumpi pelaajista saa määrätyn määrän omia merkkejään jonoon
+	joko vaaka, pysty tai vinosuuntaan peli ilmoittaa siitä sekä erillisellä
+	ruudulle ilmestyvällä viestillä että piirtämällä voittojonon päälle
+	punaisen viivan. Tämän jälkeen ei uusia merkkejä saa enää laitettua
+	ruudulle ennen uuden pelin aloitusta.
+
+4) Keskeneräisen pelin tallentaminen
+	Mikäli pelisovellus suljetaan pelin ollessa kesken sovellus kysyy
+	tallennetaanko peli. Mikäli kysymykseen vastataan myöntävästi
+	kesken oleva peli tallentuu levylle ja sovellus sulkeutuu.
+
+5) Tallennetun pelin jatkaminen
+	Mikäli pelisovellus havaitsee käynnistyessään tallennetun pelin kysyy
+	se käynnistymisen yhteydessä ladataanko kyseinen peli. Mikäli
+	kysymykseen vastataan myöntävästi peli ladataan ja peliä voi jatkaa
+	samasta tilanteesta johon se jäi. Mikäli kysymykseen vastataan
+	kieltävästi peli käynnistyy perusasetuksillaan ja tallennettu peli
+	poistetaan levyltä.
